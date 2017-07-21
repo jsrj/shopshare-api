@@ -1,55 +1,75 @@
-const express      = require('express');
-const path         = require('path');
-const favicon      = require('serve-favicon');
-const logger       = require('morgan');
-const cookieParser = require('cookie-parser');
-const bodyParser   = require('body-parser');
-const layouts      = require('express-ejs-layouts');
-const mongoose     = require('mongoose');
-const cors         = require('cors');
 
-mongoose.connect('mongodb://localhost/shopshare-api');
+///// --[#]-- [CONFIG TOOLS IMPORT] ----- >>>>>
+  const express      = require('express');
+  const path         = require('path');
+  const favicon      = require('serve-favicon');
+  const logger       = require('morgan');
+  const cookieParser = require('cookie-parser');
+  const bodyParser   = require('body-parser');
+  const layouts      = require('express-ejs-layouts');
+  const mongoose     = require('mongoose');
+  const cors         = require('cors');
+///// --[@]-- [CONFIG TOOLS IMPORT] ----- -END-
 
-const app = express();
+///// --[#]-- [DATABASE DEFINITION] ----- >>>>>
+  mongoose.connect('mongodb://localhost/shopshare-api');
+///// --[@]-- [DATABASE DEFINITION] ----- -END-
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
+///// --[#]-- [API CONFIGURATION] ----- >>>>>
+  const app = express();
 
-// default value for title local
-app.locals.title = 'ShopShare API | Usage Instructions';
+  // view engine setup
+  app.set('views', path.join(__dirname, 'views'));
+  app.set('view engine', 'ejs');
 
-// uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(layouts);
+  // default value for title local
+  app.locals.title = 'ShopShare API | Usage Instructions';
 
-const index = require('./routes/index');
-app.use('/', index);
+  // uncomment after placing your favicon in /public
+  //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+  app.use(logger('dev'));
+  app.use(bodyParser.json());
+  app.use(bodyParser.urlencoded({ extended: false }));
+  app.use(cookieParser());
+  app.use(express.static(path.join(__dirname, 'public')));
+  app.use(layouts);
+///// --[@]-- [API CONFIGURATION] ----- -END-
 
-const shopshare = require('./routes/shopshare-api');
-app.use('/api', shopshare);
+///// --[#]-- [PATH TO ALL PRIMARY ROUTES] ----- >>>>>
+  const index    = require('./routes/index');
+  const user     = require('./routes/user-routes');
+  const provider = require('./routes/provider-routes');
+  const listing  = require('./routes/listing-routes');
+  const message  = require('./routes/message-routes');
 
-// catch 404 and forward to error handler
-app.use((req, res, next) => {
-  const err = new Error('Not Found');
-  err.status = 404;
-  next(err);
-});
+  app.use('/api'     , index);
+  app.use('/user'    , user);
+  app.use('/provider', provider);
+  app.use('/listing' , listing );
+  app.use('/message' , message );
+///// --[@]-- [PATH TO ALL PRIMARY ROUTES] ----- -END-
 
-// error handler
-app.use((err, req, res, next) => {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+///// --[#]-- [ERROR CATCH] ----- >>>>>
+  // catch 404 and forward to error handler
+  app.use((req, res, next) => {
+    const err = new Error('Not Found');
+    err.status = 404;
+    next(err);
+  });
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
-});
+  // error handler
+  app.use((err, req, res, next) => {
+    // set locals, only providing error in development
+    res.locals.message = err.message;
+    res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-module.exports = app;
+    // render the error page
+    res.status(err.status || 500);
+    res.render('error');
+  });
+///// --[@]-- [ERROR CATCH] ----- -END-
+
+///// --[#]-- [APP EXPORT] ----- >>>>>
+  module.exports = app;
+///// --[@]-- [APP EXPORT] ----- -END-
+

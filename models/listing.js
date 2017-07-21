@@ -16,13 +16,13 @@ const listingSchema = new mongoose.Schema({
     required: [true, 'Please tell us where your listing will be located']
   },
   ratings: {
-    type: Array<Object>,
+    type: Array,
     default: [{}]
-  }
+  },
   provider: { // Not a required, since this will always be populated by API whe a listing is generated
     type: String,
     default: 'Banksy'
-  }
+  },
   hasPrerequisites: {
     type: Boolean,
     default: false,
@@ -33,9 +33,9 @@ const listingSchema = new mongoose.Schema({
     default: {
       price: {
         type: Number,
-        default: 5.00
+        default: 5.00,
         required: [true, 'please provide price']
-      }
+      },
       perRate: {
         type: String,
         default: 'Day',
@@ -52,7 +52,7 @@ const listingSchema = new mongoose.Schema({
       },
       cancellationWindow: {
         type: Number,
-        default: 24
+        default: 24,
         required: [true, 'Please specify window of time (in hours) that user may cancel without penalty']
       }
     }
@@ -62,7 +62,7 @@ const listingSchema = new mongoose.Schema({
     default: [] // In other words, this is completely open availability
   },
   photoUrls: {
-    type: Array<String>,
+    type: Array,
     default: [],
     required: [false, 'It is recommended you provide at least one photo to represent this listing']
   },

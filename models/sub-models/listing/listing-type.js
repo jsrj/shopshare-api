@@ -6,12 +6,12 @@ const listingTypeSchema = new mongoose.Schema({
     type: {
     type    : String, // Either Facility, Equipment, or Service
     required: [true, 'Please select listing type']
-  }
+  },
 
   facility  : {
     type: Object,
     default: {
-      facilityType: 'Workshop',
+      facilitySubType: 'Workshop',
       traits:     [
                   'Air-Conditioning',
                   'On-Site Air Compressor',
@@ -69,9 +69,9 @@ const listingTypeSchema = new mongoose.Schema({
         type: Boolean,
         default: false,
         required: [true, 'Does this equipment require that user sign a disclaimer or affadavit before usage?']
-      }
+      },
       extras: {
-        type: Array[String],
+        type: Array,
         default:[
                   'comes with 2 gallons of elbow grease.',
                   'May make you feel like Thor',

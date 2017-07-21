@@ -27,7 +27,7 @@ const messageSchema = new mongoose.Schema({
           required: [true, 'You cannot send an empty message']
         },
         attachmentUrls: {
-          type: Array<String>,
+          type: Array,
           default: []
         }
 });

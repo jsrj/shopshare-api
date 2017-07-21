@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 
 const providerSchema = new mongoose.Schema({
   ownerLiscenses: {
-    type: Array<Object>,
+    type: Array,
     default: []
   },
   payableAccountData: {
@@ -12,11 +12,11 @@ const providerSchema = new mongoose.Schema({
     default: {} // Whatever ends up in here should also be encrypted and decrypted only at the 3rd party endpoint
   },
   providerRatings: {
-    type: Array<Object>
+    type: Array,
     default: [{}]
   },
   listings: {
-    type: Array<Object>,
+    type: Array,
     default: [{}]
   }
 });

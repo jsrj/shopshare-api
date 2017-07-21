@@ -25,7 +25,7 @@ const userSchema = new mongoose.Schema({
   facebookID: {
     type: String,
     default: 'none'
-  }
+  },
   googleID: {
     type: String,
     default: 'none'
@@ -33,23 +33,23 @@ const userSchema = new mongoose.Schema({
   profileImage: {
     type: String,
     default: 'none'
-  }
+  },
   userAge: {
     type: Object,
     default: {
       day: {
         type: Number,
-        default: 01,
+        // default: 01,
         required: [true, 'Please provide the day you were born']
       },
       month: {
         type: Number,
-        default: 01,
+        // default: 01,
         required: [true, 'Please provide the month (number) you were born']
       },
       year: {
         type: Number,
-        default: 2017,
+        // default: 2017,
         required: [true, 'Please provide the year you were born']
       }
     }
@@ -90,32 +90,32 @@ const userSchema = new mongoose.Schema({
   },
   userLocation: {
     type: Object,
-    default: { //new location-data object }
+    default: {}  //new location-data object
     // Not required since the API automatically populates this when it can
   },
   summary: {
     type: String,
     default: 'Like long walks on the beach, getting my hands dirty, and building ash trays...'
-  }
+  },
   qualifications: {
-    type: Array<Object>,
+    type: Array,
     default: [{}]
-  }
+  },
   paymentData: {
     type: Object, // Everything inside of this MUST be obfuscated/encrypted and pre-processed by bcrypt before passing on to payment system
     default: {}
   },
   userRatings: {
-    type: Array<Object>,
+    type: Array,
     default: [{}]
-  }
+  },
   ratingHistory: {
     type: Array,
     default: []
     // Not required since API automatically populates this with ID of every rated listing andOR duplicate of that rating as posted in the listing
   },
   message: {
-    type: Array<Object>,
+    type: Array,
     default: [
       {
         author: {
@@ -125,7 +125,7 @@ const userSchema = new mongoose.Schema({
         },
         timestamp: {
           type: String,
-          default: '19/07/2017',
+          default: '19/07/2017'
           // Not required as this is automatically populated
         },
         userType: {
@@ -142,7 +142,7 @@ const userSchema = new mongoose.Schema({
           required: [true, 'You cannot send an empty message']
         },
         attachmentUrls: {
-          type: Array<String>,
+          type: Array,
           default: []
         }
       }
@@ -152,7 +152,7 @@ const userSchema = new mongoose.Schema({
     type: Array,
     default: []
     // Not required as this is automatically populated over time
-  }
+  },
 isProvider: {
   type: Boolean,
   default: false

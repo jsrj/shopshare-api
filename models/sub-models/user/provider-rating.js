@@ -2,7 +2,7 @@
 
 const mongoose = require('mongoose');
 
-const userRatingSchema = new mongoose.Schema({
+const providerRatingSchema = new mongoose.Schema({
   score: {
     type: Number,
     default: 5,
@@ -16,15 +16,20 @@ const userRatingSchema = new mongoose.Schema({
   title: {
     type: String,
     default: '',
-    required; [true, ' Please Give your rating/review of this user a title']
+    required: [true, ' Please Give your rating/review of this user a title']
   },
   review: {
     type: String,
     default: '',
     required: [true, 'Please tell us why you rated this user']
+  },
+  relevantListing: {
+    type: String,
+    default: '',
+    required: [true, 'Which of this provider\'s listings is this rating relevant to?']
   }
 });
 
-const UserRating = mongoose.model('UserRating', userRatingSchema);
+const ProviderRating = mongoose.model('ProviderRating', providerRatingSchema);
 
-module.exports = UserRating;
+module.exports = ProviderRating;

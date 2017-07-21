@@ -6,15 +6,15 @@ const ownerLiscenseSchema = new mongoose.Schema({
   title: {
     type: String,
     required: [true, 'Title of Liscense or Certification']
-  }
+  },
   issuedBy : {
     type: String,
     required: [true, 'Name of Issuing Authority']
   },
   issueDate: {
     type: String,
-    required [true, 'Date that Liscense or Certification was issued']
-  }
+    required: [true, 'Date that Liscense or Certification was issued']
+  },
   doesExpire: {
     type: Boolean,
     required: [true, 'Does this liscense or Certification expire?']
