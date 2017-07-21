@@ -14,6 +14,7 @@
 ///// --[#]-- [LISTINGS SEED ARRAY] ----- >>>>>
     const Listings =
     [
+    ///// --[#]-- [FIRST SEED - FACILITY -] ----- >>>>>
         {
         title: 'General Use Toolshop',
         type: 'facility',
@@ -97,7 +98,92 @@
         // All of the photos the poster/provider uploads
         photoUrls: [],
         additionalInfo: 'This is just a test listing.'
-        }
+        },
+    ///// --[@]-- [FIRST SEED - FACILITY -] ----- -END-
+
+    ///// --[#]-- [SECOND SEED - FACILITY - DIFFERENT EQUIPMENT -] ----- >>>>>
+        {
+        title: 'High-Precision Machine Shop',
+        type: 'facility',
+        equipmentProvided:
+            [
+            'CNC Mill',
+            'Refractory Furnace',
+            'Crucible',
+            'Grinders',
+            'Bridgeport Lathe'
+            ],
+        // Links to listing sub-model with a call like 'listing.for.facility...'
+        for: new ListingType({
+            facility:
+                {
+                facilitySubType: 'Machine Shop',
+                traits: [
+                        'Air-Conditioning',
+                        'On-Site Air Compressor',
+                        'Ventilation System',
+                        'Internet',
+                        'Variac'
+                        ],
+                description: 'A Machine Shop I built behind my house for making custom car parts and model airplanes',
+                multiUser: false,
+                equipment:  [],
+                ppeProvided: true,
+                ppeList:    [
+                            'respirator',
+                            'hearing protection',
+                            'dust mask',
+                            'fire cabinet'
+                            ],
+                safetyFeatures: [
+                                'Fire Extinguisher',
+                                'Chicken Stick',
+                                'Dedicated Power Supply',
+                                'Sprinkler System',
+                                'Forge Handler Gear'
+                                ],
+                additionalNotes: 'Mills and lathe are open for use, but contact me for more details if you want to use the forge'
+                },
+            equipment : {},
+            service   : {}
+        }),
+
+        // Links to location-data sub-model
+        location: new LocatedIn({
+                zip: 33322,
+                city: 'Plantation',
+                state: 'Florida',
+                country: 'United States'
+        }),
+
+        // Initialize with an empty array of objects
+        ratings:[],
+
+        // Not a required, since this will always be populated by API whe a listing is generated
+        // Automatically put req.user into this field
+        provider: currentUser,
+
+        // Either Yes or No
+        hasPrerequisites: false,
+
+        // Should Ideally be using a created sub-model, but for now, this will do
+        pricePolicy:
+            {
+            price: 15.00,
+            perRate: 'Day',
+            deposit: false,
+            depositAmount: 50.00,
+            cancellationWindow: 24
+            },
+
+        // In other words, this is completely open availability, since it's just now being posted
+        reservedDates: [],
+
+        // All of the photos the poster/provider uploads
+        photoUrls: [],
+        additionalInfo: 'This is just a test listing.'
+        },
+    ///// --[@]-- [SECOND SEED - FACILITY - DIFFERENT EQUIPMENT -] ----- -END-
     ];
 ///// --[@]-- [LISTINGS SEED ARRAY] ----- -END-
 

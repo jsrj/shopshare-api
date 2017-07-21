@@ -10,9 +10,12 @@
 
 
 ///// --[#]-- [LISTING SUB-MODELS] ----- >>>>>
+// ** UNCOMMENT ONCE POST ROUTES ARE CREATED **
+//
 //   const ListingType   = require('../models/sub-models/listing/listing-type');
 //   const ListingRating = require('../models/sub-models/listing/listing-rating');
 //   const LocationData  = require('../models/location-data');
+//
 ///// --[@]-- [LISTING SUB-MODELS] ----- -END-
 
 
@@ -20,7 +23,7 @@
 ///// --[#]-- [CRUD ACTIONS] ----- >>>>>
 
     ///// --[#]-- [(C) - POST] ----- >>>>>
-    ///// --[@]-- [(C) - POST] ----- -END-
+    ///// --[@]-- [(C) - POST] ----- -END-          <== POST Routes In-Progress
 
     ///// --[#]-- [(R) - GET] ----- >>>>>
 
@@ -96,18 +99,35 @@
             });
         ///// --[@]-- [GET LISTING BY EQUIPMENT] ----- -END-        <== Route Works
 
-    ///// --[@]-- [(R) -GET] ----- -END-
+    ///// --[@]-- [(R) - GET] ----- -END-           <== GET Routes working
 
-  ///// --[#]-- [(U) - PATCH] ----- >>>>>
-  ///// --[@]-- [(U) - PATCH] ----- -END-
+    ///// --[#]-- [(U) - PATCH] ----- >>>>>
+    ///// --[@]-- [(U) - PATCH] ----- -END-         <== PATCH Routes Still Need Creating
 
-  ///// --[#]-- [(D) - DELETE] ----- >>>>>
-  ///// --[@]-- [(D) - DELETE] ----- -END-
+    ///// --[#]-- [(D) - DELETE] ----- >>>>>
+        router.delete(`/delete/:id`, (req, res) => {
+            // Takes in the passed in parameter as provider name
+            const listingToDelete = req.params.id;
+
+            Listing.findByIdAndRemove(listingToDelete)
+                // .delete()
+                .exec((err, deletedListing) => {
+
+                        if (err) {
+                            res.json(err);
+                            return;
+                        }
+
+                        res.json({message: `Deleted ${deletedListing.title} from database.`});
+
+                    });
+        });
+    ///// --[@]-- [(D) - DELETE] ----- -END-        <== DELETE Route Works
 
 ///// --[@]-- [CRUD ACTIONS] ----- -END-
 
 
 
 ///// --[#]-- [EXPORT - ROUTER] ----- >>>>>
-  module.exports = router;
+    module.exports = router;
 ///// --[@]-- [EXPORT - ROUTER] ----- -END-
