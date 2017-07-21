@@ -99,10 +99,43 @@
             });
         ///// --[@]-- [GET LISTING BY EQUIPMENT] ----- -END-        <== Route Works
 
+        ///// --[#]-- [GET LISTING BY ID] ----- >>>>>
+            router.get(`/view/:ListingId`, (req, res) => {
+                // Takes in the passed in parameter as provider name
+                const listingId = req.params.ListingId;
+
+                Listing.findById(listingId)
+                    .exec((err, singleListing) => {
+
+                            if (err) {
+                                res.json(err);
+                                return;
+                            }
+
+                            res.json(singleListing);
+                        });
+            });
+        ///// --[@]-- [GET LISTING BY ID] ----- -END-               <== Route In-Progress
+
     ///// --[@]-- [(R) - GET] ----- -END-           <== GET Routes working
 
     ///// --[#]-- [(U) - PATCH] ----- >>>>>
-    ///// --[@]-- [(U) - PATCH] ----- -END-         <== PATCH Routes Still Need Creating
+        router.patch(`/edit/:ListingId`, (req, res) => {
+            // Takes in the passed in parameter as provider name
+            const listingId = req.params.ListingId;
+
+            Listing.findByIdAndUpdate(listingId)
+                .exec((err, singleListing) => {
+
+                        if (err) {
+                            res.json(err);
+                            return;
+                        }
+                        
+                        res.json(singleListing);
+                    });
+        });
+    ///// --[@]-- [(U) - PATCH] ----- -END-         <== PATCH Route In-Progress
 
     ///// --[#]-- [(D) - DELETE] ----- >>>>>
         router.delete(`/delete/:id`, (req, res) => {
@@ -122,7 +155,7 @@
 
                     });
         });
-    ///// --[@]-- [(D) - DELETE] ----- -END-        <== DELETE Route Works
+    ///// --[@]-- [(D) - DELETE] ----- -END-        <== DELETE Route Working
 
 ///// --[@]-- [CRUD ACTIONS] ----- -END-
 
