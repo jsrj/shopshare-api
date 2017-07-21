@@ -16,13 +16,6 @@ const listingTypeSchema = new mongoose.Schema({
                   ],
       description: 'Basically a garage full of tools and gadgets.',
       multiUser: false,
-      equipment:  [
-                  'Several different Air Drills with various RPM ratings',
-                  'Air-Hammer',
-                  'Drill Press',
-                  'Rivet Squeeze',
-                  'Bridgeport Lathe'
-                  ],
       ppeProvided: true,
       ppeList:    [
                     'respirator',

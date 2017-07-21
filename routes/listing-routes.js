@@ -25,7 +25,7 @@
     ///// --[#]-- [(R) - GET] ----- >>>>>
 
         ///// --[#]-- [GET ALL LISTINGS] ----- >>>>>
-            router.get('/listings', (req, res) => {
+            router.get('/all', (req, res) => {
                 Listing.find((err, allListings) => {
 
                     if (err) {
@@ -76,7 +76,25 @@
         ///// --[@]-- [GET LISTING BY TYPE] ----- -END-             <== Route Works
 
         ///// --[#]-- [GET LISTING BY EQUIPMENT] ----- >>>>>
-        ///// --[@]-- [GET LISTING BY EQUIPMENT] ----- -END-        <== Create
+            // Same as by provider and type, we are just searching for equipment instead
+            router.get(`/equipment/:equipment`, (req, res) => {
+                // Takes in the passed in parameter as equipment name
+                // Mongoose then iterates through the 'equipmentProvided' Array and searches for
+                // Any string in that array which matches the passed in parameter
+                const equipmentAvailable = req.params.equipment;
+
+                Listing.find({ equipmentProvided: equipmentAvailable })
+                    .exec((err, listingByEquipment) => {
+
+                            if (err) {
+                                res.json(err);
+                                return;
+                            }
+
+                            res.json(listingByEquipment);
+                        });
+            });
+        ///// --[@]-- [GET LISTING BY EQUIPMENT] ----- -END-        <== Route Works
 
     ///// --[@]-- [(R) -GET] ----- -END-
 

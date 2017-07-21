@@ -11,6 +11,10 @@ const listingSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Please specify listing type']
   },
+  equipmentProvided: {
+    type: Array,
+    default: []
+  },
   for: { // Links to listing sub-model with a call like 'listing.for.facility...'
     type: Object,
     required: [true, 'Please fill out the details on what type of listing your are making.']

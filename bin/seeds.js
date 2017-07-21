@@ -17,6 +17,14 @@
         {
         title: 'General Use Toolshop',
         type: 'facility',
+        equipmentProvided:
+            [
+            'Several different Air Drills with various RPM ratings',
+            'Air-Hammer',
+            'Drill Press',
+            'Rivet Squeeze',
+            'Bridgeport Lathe'
+            ],
         // Links to listing sub-model with a call like 'listing.for.facility...'
         for: new ListingType({
             facility:
