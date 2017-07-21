@@ -8,7 +8,7 @@
     const ListingType = require('../models/sub-models/listing/listing-type');
     const LocatedIn   = require('../models/location-data');
 
-    const currentUser = 'Admin Test';
+    const currentUser = 'test';
 ///// --[@]-- [SETTING UP SEED FILE] ----- -END-
 
 ///// --[#]-- [LISTINGS SEED ARRAY] ----- >>>>>
@@ -16,10 +16,9 @@
     [
         {
         title: 'General Use Toolshop',
-
+        type: 'facility',
         // Links to listing sub-model with a call like 'listing.for.facility...'
         for: new ListingType({
-            type: 'facility',
             facility:
                 {
                 facilitySubType: 'Garage',

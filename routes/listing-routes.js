@@ -40,16 +40,11 @@
 
         ///// --[#]-- [GET LISTINGS BY PROVIDER] ----- >>>>>
             router.get(`/:provider`, (req, res) => {
-                req.params.provider = provider;
-            Listing
-                    .find({ provider: provider }).
-                    where('name.last').equals('Ghost').
-                    where('age').gt(17).lt(66).
-                    where('likes').in(['vaporizing', 'talking']).
-                    limit(10).
-                    sort ('-occupation').
-                    select('name occupation').
-                    exec  ((err, listingByProvider) => {
+                // Takes in the passed in parameter as provider name
+                const listingBy = req.params.provider;
+
+                Listing.find({ provider: listingBy })
+                    .exec((err, listingByProvider) => {
 
                             if (err) {
                                 res.json(err);
@@ -59,10 +54,26 @@
                             res.json(listingByProvider);
                         });
             });
-        ///// --[@]-- [GET LISTINGS BY PROVIDER] ----- -END-        <== In-Progress
+        ///// --[@]-- [GET LISTINGS BY PROVIDER] ----- -END-        <== Route Works
 
         ///// --[#]-- [GET LISTING BY TYPE] ----- >>>>>
-        ///// --[@]-- [GET LISTING BY TYPE] ----- -END-             <== Create
+            // Same as by provider, we are just searching for a type instead
+            router.get(`/type/:type`, (req, res) => {
+                // Takes in the passed in parameter as provider name
+                const listingType = req.params.type;
+
+                Listing.find({ type: listingType })
+                    .exec((err, listingByType) => {
+
+                            if (err) {
+                                res.json(err);
+                                return;
+                            }
+
+                            res.json(listingByType);
+                        });
+            });
+        ///// --[@]-- [GET LISTING BY TYPE] ----- -END-             <== Route Works
 
         ///// --[#]-- [GET LISTING BY EQUIPMENT] ----- >>>>>
         ///// --[@]-- [GET LISTING BY EQUIPMENT] ----- -END-        <== Create

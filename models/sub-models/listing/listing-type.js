@@ -3,11 +3,6 @@
 const mongoose = require('mongoose');
 
 const listingTypeSchema = new mongoose.Schema({
-    type: {
-    type    : String, // Either Facility, Equipment, or Service
-    required: [true, 'Please select listing type']
-  },
-
   facility  : {
     type: Object,
     default: {
