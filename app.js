@@ -9,6 +9,10 @@
   const layouts      = require('express-ejs-layouts');
   const mongoose     = require('mongoose');
   const cors         = require('cors');
+
+  //Auth Specific
+  const session      = require('express-session');
+  const passport     = require('passport');
 ///// --[@]-- [CONFIG TOOLS IMPORT] ----- -END-
 
 ///// --[#]-- [DATABASE DEFINITION] ----- >>>>>
@@ -33,18 +37,38 @@
   app.use(cookieParser());
   app.use(express.static(path.join(__dirname, 'public')));
   app.use(layouts);
+
+  // Auth Specific - Import passport config
+  require('./config/passport-config');
 ///// --[@]-- [API CONFIGURATION] ----- -END-
 
-///// --[#]-- [PATH TO ALL PRIMARY ROUTES] ----- >>>>>
-  const index    = require('./routes/index');
-  const user     = require('./routes/user-routes');
-  const provider = require('./routes/provider-routes');
-  const listing  = require('./routes/listing-routes');
-  const message  = require('./routes/message-routes');
+///// --[#]-- [AUTHENTICATION SETUP] ----- >>>>>
+  // Auth specific - configure session
+  app.use(session({
+    secret: 'er07fQLbR^R&xStty@#b7vzLjkTp6SBH686D**9ZKzWd!O26I^9TWW4aiV214AlS',
+    resave: true, // needed to avoid wierd errors
+    saveUninitialized: true
+  }));
 
-  app.use('/api'     , index);
-  
-  app.use('/user'    , user);
+  // Auth Specific - configure passport
+  app.use(passport.initialize());
+  app.use(passport.session());
+  app.use(cors({
+    credentials: true,
+    origin: ['http://localhost/4200']
+  }));
+  /* make sure to remember passport-config file */
+///// --[@]-- [AUTHENTICATION SETUP] ----- -END-
+
+///// --[#]-- [PATH TO ALL PRIMARY ROUTES] ----- >>>>>
+  const user     = require('./routes/user-routes'          );
+  const provider = require('./routes/provider-routes'      );
+  const listing  = require('./routes/listing-routes'       );
+  const message  = require('./routes/message-routes'       );
+  const auth     = require('./routes/authentication-routes');
+
+  app.use('/auth'    , auth    );
+  app.use('/user'    , user    );
   app.use('/provider', provider);
   app.use('/listing' , listing );
   app.use('/message' , message );
