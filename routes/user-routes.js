@@ -26,64 +26,30 @@
 
 ///// --[#]-- [CRUD ACTIONS] ----- >>>>>
 
+  ///// --[#]-- [TEST] ----- >>>>>
+    router.get('/test', (req, res, next) => {
+      res.json({message: 'Hello World!'});
+    });
+  ///// --[@]-- [TEST] ----- -END-
+
   ///// --[#]-- [(C) - POST] ----- >>>>>
     /* CREATE a new user. Right now this is just a hard-coded test user */
     router.post('/new', (req, res, next) => {
       const newUser = new User({
 
-          firstName: 'Joe',
+          firstName: req.body.firstName,
+          lastName : req.body.lastName,
+          userName : req.body.userName,
+          email    : req.body.email,
+          encPW    : req.body.registerPassword,
 
-          lastName: 'Schmoe',
-
-          userName: 'joe_mc_schmoe_69',
-
-          email: 'joe@reaper420.com',
-
-          encPW: 'zxcvbn',
-
-          facebookID: 'none',
-
-          googleID: 'none',
-
-          profileImage: '',
-
-          userAge: {
-            day  : 01,
-            month: 01,
-            year : 2017
-          },
-
-          phone: '(555) 867-5309',
-
-          proofOfID: {
-            idType: 'Driver\'s Liscense',
-            issuingState: 'Florida',
-            issueDate: '01/01/2017',
-            expirationDate: '01/02/2017',
-            idNumber: 's87df6a8sd7fqw'
-            },
-
-          userLocation: {},
-          summary: 'Like long walks on the beach, getting my hands dirty, and building ash trays...',
-          qualifications: [{}],
-          paymentData: {},
-          userRatings: [{}],
-          ratingHistory: [],
-          message:[
-                    {
-                      author: 'ShopShare Admin',
-                      timestamp: '19/07/2017',
-                      userType: 'Admin',
-                      subject: 'Welcome To ShopShare',
-                      content: 'Blah blah blah, welcome to shopshare and stuff, test test test 1 2 3',
-                      attachmentUrls: []
-                    }
-                  ],
-
-          history: [],
-
+          userLocation: new LocationData({
+            city: req.body.city,
+            state: req.body.state,
+            country: req.body.country,
+            zip: req.body.zip
+          }),
         isProvider: false,
-
         providerData: {}
       });
 
@@ -100,7 +66,7 @@
         });
       });
     });
-  ///// --[@]-- [(C) -POST] ----- -END-
+  ///// --[@]-- [(C) -POST] ----- -END-       <== Route Works
 
   ///// --[#]-- [(R) - GET] ----- >>>>>
   // Retrieves data for all users. DO NOT put this into production.

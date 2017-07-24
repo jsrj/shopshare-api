@@ -120,21 +120,27 @@
     ///// --[@]-- [(R) - GET] ----- -END-           <== GET Routes working
 
     ///// --[#]-- [(U) - PATCH] ----- >>>>>
-        router.patch(`/edit/:ListingId`, (req, res) => {
-            // Takes in the passed in parameter as provider name
-            const listingId = req.params.ListingId;
+        // router.patch(`/edit/:ListingId`, (req, res) => {
+        //     // Takes in the passed in parameter as provider name
+        //     const listingId = req.params.ListingId;
 
-            Listing.findByIdAndUpdate(listingId)
-                .exec((err, singleListing) => {
-
-                        if (err) {
-                            res.json(err);
-                            return;
-                        }
-                        
-                        res.json(singleListing);
-                    });
-        });
+        //     Listing.findByIdAndUpdate(listingId)
+        //         .exec((err, singleListing) => {
+        //             if (!singleListing)
+        //                 console.log(err);
+        //             else {
+        //                 // do your updates here. Include constructor for sub-models as well
+        //                 singleListing.modified = new Listing();
+        //                 }
+        //                 singleListing.save(function(err) {
+        //                 if (err) {
+        //                     console.log(err);
+        //                 } else {
+        //                     console.log(`Listing ${listingId} updated successfully.`);
+        //                 }
+        //                 res.json(singleListing);
+        //             });
+        // });
     ///// --[@]-- [(U) - PATCH] ----- -END-         <== PATCH Route In-Progress
 
     ///// --[#]-- [(D) - DELETE] ----- >>>>>
