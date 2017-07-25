@@ -45,12 +45,12 @@
         }
 
         if (userFromDb === null) {
-            next(null, false, { message : 'Incorrect eMail 🍕💩' });
+            next(null, false, { message : 'Incorrect e-mail.' });
             return;
         }
 
-        if (bcrypt.compareSync(thePassword, userFromDb.encryptedPassword) === false) {
-            next(null, false, { message : 'Incorrect Password 💣' });
+        if (bcrypt.compareSync(thePassword, userFromDb.encPW) === false) {
+            next(null, false, { message : 'Incorrect Password.' });
             return;
         }
 

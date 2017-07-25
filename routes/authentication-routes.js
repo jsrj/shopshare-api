@@ -163,7 +163,7 @@
     req.logout();
     res.status(200).json({ message: 'Signed out successfully. Bye.' });
     });
-///// -[@]- [ LOGOUT ACTIVE USER ] ----- -end-
+///// -[@]- [ LOGOUT ACTIVE USER ] ----- -END-
 
 
 ///// --[#]-- [ROUTER EXPORT] ----- >>>>>
