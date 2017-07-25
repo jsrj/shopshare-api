@@ -62,7 +62,8 @@
                     country  : req.body.country,
                     zip      : req.body.zip,
                 }),
-                //INITIALIZE EMPTY FIELDS THAT WILL BE NEEDED LATER (TO SATISFY DEFAULT REQS)
+
+                //INITIALIZE EMPTY FIELDS THAT WILL BE NEEDED LATER (TO SATISFY DEFAULTS)
                 message      : new Message({
 
                     // MESSAGE HEADER
@@ -109,36 +110,61 @@
 ///// --[@]-- [REGISTRATION POST ROUTE] ----- -
 
 ///// --[#]-- [LOGIN POST ROUTE] ----- >>>>>
-// POST login - we need to define a callback function since we dont want redirects. passport.authenticate() redirects
-    router.post('/login', (req, res, next) => {
-    const authenticateStandardUser = passport.authenticate('local', (err, standardUser, extr) => {
-    if (err) {
-        res.status(500).json({ message: 'Well man, who knows why, but something went wrong.' });
-        return;
-    }
-    // Login failed for sure
-    if (!standardUser) {
-        // (Extr)aInfo already contains feedback messages from LocalStrategy
-        res.status(418).json(extr);
-        return;
-    }
+    // POST login - we need to define a callback function since we dont want redirects. passport.authenticate() redirects
+        router.post('/login', (req, res, next) => {
+        const authenticateStandardUser = passport.authenticate('local', (err, standardUser, extr) => {
+        if (err) {
+            res.status(500).json({ message: 'Well man, who knows why, but something went wrong.' });
+            return;
+        }
+        // Login failed for sure
+        if (!standardUser) {
+            // (Extr)aInfo already contains feedback messages from LocalStrategy
+            res.status(418).json(extr);
+            console.log(extr);
+            return;
+        }
 
-    //Login Successful
-    req.login(standardUser, (err) => {
-        if(err) {
-        res.status(500).json({ message: 'Dat server done mussed up.'});
-        return;
-    }
+        //Login Successful
+        req.login(standardUser, (err) => {
+            if(err) {
+            res.status(500).json({ message: 'Dat server done mussed up.'});
+            console.log(err);
+            return;
+        }
 
-        standardUser.encPW = undefined;
-        res.status(200).json(standardUser);
-    })
-    });
+            standardUser.encPW = undefined;
+            res.status(200).json(standardUser);
+        })
+        });
 
-    // Custom defined authentication strategy
-    authenticateStandardUser(req, res, next);
-    });
+        // Custom defined authentication strategy
+        authenticateStandardUser(req, res, next);
+        });
 ///// --[@]-- [LOGIN POST ROUTE] ----- -END-
+
+///// --[#]-- [CHECK ACTIVE USER SESSION] ----- >>>>>
+    // GET  checklogin
+        router.get('/session/check', (req, res, next) =>{
+        if (!req.user) {
+                res.status(401).json({
+                loggedIn:   false,
+                message: 'Nobody currently logged in' });
+            return;
+        }
+        req.user.encPW = undefined;
+        res.status(200).json(req.user);
+        });
+///// --[@]-- [CHECK ACTIVE USER SESSION] ----- -END-
+
+///// -[#]- [ LOGOUT ACTIVE USER ] ----- >>>>>
+    // POST logout
+    router.post('/session/end', (req, res, next) =>{
+    req.logout();
+    res.status(200).json({ message: 'Signed out successfully. Bye.' });
+    });
+///// -[@]- [ LOGOUT ACTIVE USER ] ----- -end-
+
 
 ///// --[#]-- [ROUTER EXPORT] ----- >>>>>
     module.exports = router;
