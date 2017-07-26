@@ -3,6 +3,10 @@
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
+  online: {
+    type: Boolean,
+    default: false
+  },
   firstName: {
     type: String,
     required: [true, 'Please provide your first name']
@@ -30,10 +34,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     default: 'none'
   },
-  profileImage: {
-    type: String,
-    default: 'none'
-  },
+  profileImage: '',
   userAge: {
     type: Object,
     default: {

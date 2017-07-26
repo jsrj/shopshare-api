@@ -1,6 +1,7 @@
 ///// --[#]-- [ROUTER PRE-REQS] ----- >>>>>
     const express = require('express');
     const router  = express.Router();
+    const multer  =require('multer');
 ///// --[@]-- [ROUTER PRE-REQS] ----- -END-
 
 ///// --[#]-- [AUTHENTICATION PRE-REQS] ----- >>>>>
@@ -14,7 +15,23 @@
 
     const Message      = require('../models/sub-models/user/user-message');
     const DOB          = require('../models/sub-models/user/user-age');
+
+    const myUploader   = multer({
+        dest: __dirname + '/../public/uploads/'
+    });
 ///// --[@]-- [RELEVANT USER DATA MODELS] ----- -END-
+
+///// --[#]-- [ USER UPLOADS ] ----- >>>>>
+    router.post('/userUploads', myUploader.single('file'), (req, res) => {
+        // Save url to [user].profileImage
+        if(req.file) {
+            console.log(req.file);
+                req.user.profileImage = `../public/uploads/${req.file.filename}`;
+                console.log(req.user.profileImage);
+        }
+    });
+///// --[@]-- [ USER UPLOADS ] ----- -END-
+
 
 ///// --[#]-- [REGISTRATION POST ROUTE] ----- >>>>>
     // ** DONT FORGET ORDER OF ARGUMENTS (REQUEST, RESPONSE, NEXT...) **
@@ -132,7 +149,7 @@
             console.log(err);
             return;
         }
-
+            standardUser.online = true;
             standardUser.encPW = undefined;
             res.status(200).json(standardUser);
         })
@@ -151,15 +168,19 @@
                 loggedIn:   false,
                 message: 'Nobody currently logged in' });
             return;
-        }
-        req.user.encPW = undefined;
-        res.status(200).json(req.user);
+            } else {
+                req.user.online = true;
+                req.user.encPW = undefined;
+                res.status(200).json(req.user);
+                return;
+            }
         });
 ///// --[@]-- [CHECK ACTIVE USER SESSION] ----- -END-
 
 ///// -[#]- [ LOGOUT ACTIVE USER ] ----- >>>>>
     // POST logout
     router.post('/session/end', (req, res, next) =>{
+    req.user.online = false;
     req.logout();
     res.status(200).json({ message: 'Signed out successfully. Bye.' });
     });
