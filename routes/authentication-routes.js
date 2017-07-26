@@ -90,9 +90,9 @@
 
                     // MESSAGE BODY
                     subject  : 'Welcome To Shopshare',
-                    content  : `Welcome!,
-                                bLAH BLAH BLEP BLAH BLOOP ADSFASFADFADF.
-                                - Arjay`,
+                    content  : `Welcome! ${req.body.userName},
+                    Welcome to buildershare.co! Navigate to your home page to view current listings, or get started posting your own!
+                    - TheBuilderGuy`,
                     attachmentUrls: [],
                 }),
                 userRatings: [],
