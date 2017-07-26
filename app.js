@@ -77,6 +77,12 @@
   app.use('/message' , message );
 ///// --[@]-- [PATH TO ALL PRIMARY ROUTES] ----- -END-
 
+///// --[#]-- [DEFAULT DIRECTORY PATH] ----- >>>>>
+  app.use((req, res, next) => {
+    res.sendFile( __dirname + '/public/index.html');
+  });
+///// --[@]-- [DEFAULT DIRECTORY PATH] ----- -END-
+
 ///// --[#]-- [ERROR CATCH] ----- >>>>>
   // catch 404 and forward to error handler
   app.use((req, res, next) => {
