@@ -9,6 +9,8 @@
   const layouts      = require('express-ejs-layouts');
   const mongoose     = require('mongoose');
   const cors         = require('cors');
+  
+  require('dotenv').config()
 
   //Auth Specific
   const session      = require('express-session');
@@ -16,7 +18,7 @@
 ///// --[@]-- [CONFIG TOOLS IMPORT] ----- -END-
 
 ///// --[#]-- [DATABASE DEFINITION] ----- >>>>>
-  mongoose.connect('mongodb://localhost/shopshare-api');
+  mongoose.connect(process.env.MONGODB_URI);
 ///// --[@]-- [DATABASE DEFINITION] ----- -END-
 
 ///// --[#]-- [API CONFIGURATION] ----- >>>>>
