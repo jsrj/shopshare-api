@@ -154,15 +154,22 @@ const userSchema = new mongoose.Schema({
     default: []
     // Not required as this is automatically populated over time
   },
-isProvider: {
-  type: Boolean,
-  default: false
-},
-
-providerData: {
-  type: Object,
-  default: {}
-}
+  ownerLiscenses: {
+    type: Array,
+    default: []
+  },
+  payableAccountData: {
+    type: Object,
+    default: {} // Whatever ends up in here should also be encrypted and decrypted only at the 3rd party endpoint
+  },
+  providerRatings: {
+    type: Array,
+    default: [{}]
+  },
+  listings: {
+    type: Array,
+    default: [{}]
+  }
 });
 
 const User = mongoose.model('User', userSchema);
