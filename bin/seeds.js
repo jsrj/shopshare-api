@@ -1,7 +1,9 @@
 ///// --[#]-- [SETTING UP SEED FILE] ----- >>>>>
     // Connect to the Mongo Database
+    require('dotenv').config();
+
     const   mongoose=require('mongoose');
-            mongoose.connect('mongodb://localhost/shopshare-api');
+            mongoose.connect(process.env.MONGODB_URI);
 
     // Import the relevant models
     const Listing     = require('../models/listing');
