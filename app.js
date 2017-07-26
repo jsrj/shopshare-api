@@ -9,7 +9,7 @@
   const layouts      = require('express-ejs-layouts');
   const mongoose     = require('mongoose');
   const cors         = require('cors');
-  
+
   require('dotenv').config()
 
   //Auth Specific
