@@ -9,19 +9,126 @@
 ///// --[@]-- [PRIMARY LISTING MODEL] ----- -END-
 
 
+
 ///// --[#]-- [LISTING SUB-MODELS] ----- >>>>>
 // ** UNCOMMENT ONCE POST ROUTES ARE CREATED **
 //
-//   const ListingType   = require('../models/sub-models/listing/listing-type');
+const ListingType   = require('../models/sub-models/listing/listing-type');
 //   const ListingRating = require('../models/sub-models/listing/listing-rating');
-//   const LocationData  = require('../models/location-data');
+  const LocatedIn  = require('../models/location-data');
 //
 ///// --[@]-- [LISTING SUB-MODELS] ----- -END-
 
 ///// --[#]-- [CRUD ACTIONS] ----- >>>>>
 
-    ///// --[#]-- [(C) - POST] ----- >>>>>
-    ///// --[@]-- [(C) - POST] ----- -END-          <== POST Routes In-Progress
+    ///// --[#]-- [(C) - POST NEW LISTING --!!! HIGH PRIORITY !!!-- ] ----- >>>>> !!! HIGH PRIORITY !!!
+                router.post('/new/:listingType', (req, res) => {
+
+                    let currentUser = '';
+                    if (!req.user) {
+                        currentUser = 'Anonymous';
+                    } else {
+                        currentUser = req.user.userName;
+                    }
+
+                    let newListingType = {};
+                    if (req.params.listingType === 'facility') {
+                        console.log('requested new facility listing');
+                        console.log(req.body.listingType);
+                        newListingType = new ListingType ({
+                            facility:
+                                {
+                                facilitySubType: req.body.listingFacilitySubType,
+                                traits:          req.body.listingFacilityTraits,
+                                description:     req.body.listingFacilityDescription,
+                                multiUser:       req.body.listingIsMultiUser,
+                                ppeProvided:     req.body.listingPPEProvided,
+                                ppeList:         req.body.listingPPEList,
+                                safetyFeatures:  req.body.listingSafetyFeatures,
+                                additionalNotes: req.body.listingAdditionalNotes
+                                }
+                        });
+                    }
+                    if (req.params.listingType === 'equipment') {
+                        console.log('requested new equipment listing');
+                        console.log(req.body.listingType);
+                        newListingType = new ListingType ({
+                            equipment :
+                                {
+                                powerType:        req.body.listingPowerType,
+                                isRestricted:     req.body.listingEquipmentIsRestricted,
+                                requiredLiscense: req.body.listingRequiredLiscense,
+                                isPortable:       req.body.listingIsPortable,
+                                isHazardous:      req.body.listingIsHazardous,
+                                extras:           req.body.listingExtras
+                                }
+                            });
+                    }
+                    if (req.params.listingType === 'service')   {
+                        newListingType = new ListingType ({
+                            service   :
+                                {
+                                physicalOnly:  req.body.listingIsPhysicalLocation,
+                                skillsOffered: req.body.listingSkillsOffered,
+                                description:   req.body.listingDescription
+                                }
+                            });
+                    }
+
+                    const newListing = {
+                        title:             req.body.listingTitle,
+                        type:              req.body.listingType,
+                        equipmentProvided: req.body.equipmentArray,
+
+                        // Links to listing sub-model with a call like 'listing.for.facility...'
+                        for: newListingType,
+
+                        // Links to location-data sub-model
+                        location: new LocatedIn ({
+                                zip:     req.body.listingZip,
+                                city:    req.body.listingCity,
+                                state:   req.body.listingState,
+                                country: req.body.listingCountry
+                        }),
+
+                        // Initialize with an empty array of objects
+                        ratings:[],
+
+                        // Not a required, since this will always be populated by API whe a listing is generated
+                        // Automatically put req.user into this field
+                        provider: currentUser,
+
+                        // Either Yes or No
+                        hasPrerequisites: req.body.listingHasPrerequisites,
+
+                        // Should Ideally be using a created sub-model, but for now, this will do
+                        pricePolicy:
+                            {
+                            price:              req.body.listingPrice,
+                            perRate:            req.body.listingPerRate,
+                            deposit:            req.body.listingDeposit,
+                            depositAmount:      req.body.listingDepositAmount,
+                            cancellationWindow: req.body.listingCancellationWindow
+                            },
+
+                        // In other words, this is completely open availability, since it's just now being posted
+                        reservedDates: [],
+
+                        // All of the photos the poster/provider uploads
+                        photoUrls: [],
+                        additionalInfo:        req.body.listingAdditionalInfo
+                        };
+
+                    Listing.create(newListing, (err, listing) => {
+                        if (err) {
+                            throw err;
+                        }
+                        console.log(listing.title);
+                        console.log(listing.type);
+                        res.json(listing.title);
+                    });
+            });
+    ///// --[@]-- [(C) - POST NEW LISTING] ----- -END-          <== POST Route WORKS
 
     ///// --[#]-- [(R) - GET] ----- >>>>>
 
