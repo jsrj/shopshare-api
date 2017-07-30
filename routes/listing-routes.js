@@ -6,6 +6,7 @@
 
 ///// --[#]-- [PRIMARY LISTING MODEL] ----- >>>>>
     const Listing       = require('../models/listing');
+    const User          = require('../models/standard-user')
 ///// --[@]-- [PRIMARY LISTING MODEL] ----- -END-
 
 
@@ -129,6 +130,21 @@ const ListingType   = require('../models/sub-models/listing/listing-type');
                     });
             });
     ///// --[@]-- [(C) - POST NEW LISTING] ----- -END-          <== POST Route WORKS
+
+    ///// --[#]-- [POST - SAVE LISTING TO USER FAVORITES] ----- >>>>>
+                router.post('/save', (req, res) => {
+                User.findByIdAndUpdate(req.user._id, {listings: req.body.listingID}, (err, currentUser) => {
+
+                    if (err) {
+                        res.json(err);
+                        return;
+                    }
+                    currentUser.listings.push(req.body.listingID);
+                    currentUser.save();
+                    res.json({message: 'Successfully saved listing to userID '+ req.user._id});
+                });
+            });
+    ///// --[@]-- [POST - SAVE LISTING TO USER FAVORITES] ----- -END-
 
     ///// --[#]-- [(R) - GET] ----- >>>>>
 

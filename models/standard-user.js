@@ -169,6 +169,10 @@ const userSchema = new mongoose.Schema({
   listings: {
     type: Array,
     default: [{}]
+  },
+  favorites: {
+    type: Array,
+    default: []
   }
 });
 
